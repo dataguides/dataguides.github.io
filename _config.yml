@@ -2,12 +2,12 @@ title:            Data Guides
 tagline:          From SAS to R and Python
 description:      Resources for data analysts
 #Comment out url when working locally to resolve base urls correctly
-url:              http://dataguides.github.io
+#url:              http://dataguides.github.io
 
 # Owner/author information
 owner:
   name:           Data Guides
-  avatar:         bio-photo.png
+  avatar:         bio-photo2.png
   bio:            "From SAS to R and Python"
   email:          ccheaton@gmail.com
   # Social networking links are used in author-bio sidebar. Update and remove as you like.
