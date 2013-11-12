@@ -1,14 +1,14 @@
-title:            Site Title
-tagline:          A short tagline
-description:      Describe your website.
+title:            Data Guides
+tagline:          From SAS to R and Python
+description:      Resources for data analysts
 #Comment out url when working locally to resolve base urls correctly
-url:              http://your-site.com
+url:              http://dataguides.github.io
 
 # Owner/author information
 owner:
-  name:           Your Name
+  name:           Data Guides
   avatar:         bio-photo.jpg
-  bio:            "Describe your self."
+  bio:            "Site description."
   email:          your@email.com
   # Social networking links are used in author-bio sidebar. Update and remove as you like.
   twitter:        
