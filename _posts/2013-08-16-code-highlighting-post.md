@@ -1,7 +1,7 @@
 ---
 layout: post
-title: Syntax Highlighting Post
-description: "Demo post displaying the various ways of highlighting code in Markdown."
+title: Example Post Showing Code Highlighting
+description: "This is a sample of code highlighting."
 category: articles
 tags: [sample post, code, highlighting]
 ---
