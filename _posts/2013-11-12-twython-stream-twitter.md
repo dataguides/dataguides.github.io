@@ -541,7 +541,7 @@ The problem with storing a huge amount of JSON is that you are storing more info
 ### Exploring the Twitter JSON
 
 In order to convert your tweet's JSON data to CSV, you need to know which keys to access in the JSON. Luckily, JSON is very similar to python's dictionary data format, so you can load your tweet as JSON and query it like you would a python dictionary to determine how to access the fields that you want.  
-<br /><br />
+<br />
 
 It's nice to use iPython, a tool that installs with many python distributions, to explore data in this manner. However, we also can simply use the python shell through Powershell (or Terminal on OS X). Since we've used Powershell so far in this tutorial, we'll continue to use it. In your Powershell, navigate to the directory where your `json_example.json` file is and then type `python` to launch interactive python. You can try typing `ipython` for an enhanced editor. 
 
@@ -782,5 +782,9 @@ Wed Nov 13 19:29:29 +0000 2013,SebastianKaczorowski,RT @Reuters: Before and Afte
 {% endhighlight %}
 
 I started an instance of this a few days ago, to capture tweets relevant to the Playstation 4, to track changes over the course of its release week. I set it to save 50,000 tweets per file and to capture an unlimited number of tweets. In the past 4 days, it has saved as CSV over 500,000 tweets! That's a lot of data to mine!
-<br /><br />
+<br />
+
+**Be aware** that Excel will not open a CSV file with UTF-8 encoding by default. If your CSV file contains Arabic, Chinese, Japanese, etc... characters, they will not appear properly in Excel unless you launch Excel, import your CSV file as text and set the encoding to UTF-8. Likewise, SAS has trouble importing UTF-8 characters by default. The import wizard in SAS Enterprise Guide will handle UTF-8 properly. See the SAS documentation for more information.
+{: .notice}
+<br />
 That's it for this introduction to capturing Twitter streams! I hope you found it useful.
