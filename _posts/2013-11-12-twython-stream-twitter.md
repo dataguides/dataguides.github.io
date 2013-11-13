@@ -19,7 +19,8 @@ tags: [python,twython,twitter,json,csv]
 ## Overview
 
 *This article is a work in progress. I'll start with instructions for Windows and hope to add instructions of Mac OS X later.*
-<br /><br />
+{: .notice}
+<br />
 
 This page provides an example of how to connect to Twitter's streaming API using a Python library called Twython. To follow along, you need several things:
 
@@ -189,10 +190,10 @@ cd ~/streamer
 {% endhighlight %}
 
 `cd` means "change directory" and the `~` is a shortcut for your user directory. If you saved your script somewhere else, you will have to navigate to it using similar commands. 
-<br /><br />
 
-*Note: there is a useful feature in Powershell for opening a folder with Windows Explorer. Simply type `explorer .` at the prompt and the current folder will open.*
-<br /><br />
+**PS**: there is a useful feature in Powershell for opening a folder with Windows Explorer. Simply type `explorer .` at the prompt and the current folder will open.
+{: .notice}
+<br />
 
 Once you are in the proper directory in Powershell, type `ls` to see a list of the files there. You should see `stream_simple.py` listed. If you do, then hop into Sublime Text and make sure that you saved your file after pasting in the code and inserting your Twitter keys. Then return to Powershell and type in the following to launch the script.
 
@@ -211,4 +212,6 @@ There was an error
 who built theirs..
 {% endhighlight %}
 
-**You can safely ignore the error** for right now, if you see one. Basically, a lot of people type tweets in languages that include special non-English characters. We have yet to tell our streaming script how to handle those characters. Powershell does not know how to handle them by default.
+**You can safely ignore the error** for right now, if you see one. Basically, a lot of people type tweets in languages that include non-English characters that are encoded with [UTF-8](http://en.wikipedia.org/wiki/UTF-8). We have yet to tell our streaming script how to handle those characters. Powershell does not handle them by default and does not know how to display them.
+
+**To be continued...**
