@@ -1,14 +1,13 @@
 ---
 layout: page
 permalink: /about/index.html
-title: About the Theme
-tagline: Minimal Mistakes, a Jekyll Theme
-tags: [about, Jekyll, theme, responsive]
-modified: 9-9-2013
+title: About the Data Guides Website
+tagline: 
+tags: [about, analytics, data]
+modified: 11-12-2013
 image:
-  feature: texture-feature-02.jpg
-  credit: Texture Lovers
-  creditlink: http://texturelovers.com
+  feature: golden.jpg
+  credit: Clay Heaton
 ---
 
-This is the about page.
+This site is produced by [Clay Heaton](https://github.com/ccheaton) and (insert more people) from the NCSU Institute for Advanced Analytics.
