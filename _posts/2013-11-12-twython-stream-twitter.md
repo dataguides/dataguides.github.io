@@ -3,7 +3,7 @@ layout: post
 title: Using Python and Twython to Catch a Twitter Stream
 description: "An example of how to monitor a Twitter stream with Python"
 category: articles
-tags: [python,twython,twitter,json,csv]
+tags: [python,twython,twitter,json,csv,data]
 ---
 
 <section id="table-of-contents" class="toc">
