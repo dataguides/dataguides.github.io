@@ -7,5 +7,3 @@ image:
   credit: Stamen Maps
   creditlink: http://maps.stamen.com
 ---
-
-Does this appear?

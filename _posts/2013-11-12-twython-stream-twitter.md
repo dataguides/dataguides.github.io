@@ -781,10 +781,34 @@ Wed Nov 13 19:29:29 +0000 2013,Lasia ;-),RT @DanielaRuah: CBS family is doing it
 Wed Nov 13 19:29:29 +0000 2013,SebastianKaczorowski,RT @Reuters: Before and After: Typhoon Haiyan Aftermath http://t.co/MKg74kkoWg http://t.co/FYwCmyHx6O
 {% endhighlight %}
 
-I started an instance of this a few days ago, to capture tweets relevant to the Playstation 4, to track changes over the course of its release week. I set it to save 50,000 tweets per file and to capture an unlimited number of tweets. In the past 4 days, it has saved as CSV over 500,000 tweets! That's a lot of data to mine!
+I started an instance of this a few days ago, to capture tweets relevant to the Playstation 4, to track changes over the course of its release week. I set it to save 50,000 tweets per file and to capture an unlimited number of tweets. In the past 4 days, it has saved as CSV over 700,000 tweets! That's a lot of data to mine!
 <br />
 
 **Be aware** that Excel will not open a CSV file with UTF-8 encoding by default. If your CSV file contains Arabic, Chinese, Japanese, etc... characters, they will not appear properly in Excel unless you launch Excel, import your CSV file as text and set the encoding to UTF-8. Likewise, SAS has trouble importing UTF-8 characters by default. The import wizard in SAS Enterprise Guide will handle UTF-8 properly. See the SAS documentation for more information.
 {: .notice}
 <br />
+
+### Additional Resources
+
+Twitter provides a comprehensive set of documents on their [developer website](https://dev.twitter.com/docs) about how to access the API and the rate limits for user accounts. The streaming services are only a part of the functionality available through Twitter and Twython. The [Twython documentation](http://twython.readthedocs.org/en/latest/) provides insight into how to use different aspects of the Twitter API in python. For example, with simple code changes, you can track all tweets from a single user or perform searches that instantly will return thousands of tweets. You also can navigate into the [Examples directory on Twython's GitHub repository](https://github.com/ryanmcgrath/twython/tree/master/examples) to see future examples of how to use Twython to access Twitter.
+
+For example, here is a short code snippet from the Twython repository that shows how to return 50 tweets in a search:
+
+{% highlight python %}
+from twython import Twython, TwythonError
+
+# Requires Authentication as of Twitter API v1.1
+twitter = Twython(APP_KEY, APP_SECRET, OAUTH_TOKEN, OAUTH_TOKEN_SECRET)
+try:
+    search_results = twitter.search(q='haiyan', count=50)
+except TwythonError as e:
+    print e
+
+for tweet in search_results['statuses']:
+    print 'Tweet from @%s Date: %s' % (tweet['user']['screen_name'].encode('utf-8'), tweet['created_at'])
+    print tweet['text'].encode('utf-8'), '\n'
+{% endhighlight %}
+
+As mentioned above, Twitter imposes a limit on the number of tweets that you can access within a given time frame. The number varies based on your application. One nice feature of the streaming API is that the rate is limited by Twitter, so as a user (assuming you only use a single instance of your script at a time), you never will receive notices that you are outpacing the API limits. 
+
 That's it for this introduction to capturing Twitter streams! I hope you found it useful.
