@@ -128,7 +128,9 @@ So, in our results above, our correlation coefficient is 0.835, indicating stron
 
 When performing linear regression, we have several assumptions to check:
 
-1. There is a linear relationship between the independent and dependent variables. (The mean of the Y values is accurately modeled by a linear function of the X values)
+There is a linear relationship between the independent and dependent variables. (The mean of the Y values is accurately modeled by a linear function of the X values)
+{: .notice}
+
 2. The random error term is assumed to have a normal distribution with a mean of zero.
 3. The random error term is assumed to have a constant variance (also called homoscedasticity)
 4. The errors are independent
