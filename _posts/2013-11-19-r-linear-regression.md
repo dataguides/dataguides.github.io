@@ -163,19 +163,19 @@ The correlation is determined to be .636, indicating a moderately strong, positi
 
 When performing linear regression, we have several assumptions to check:
 
-**Linearity**: There is a linear relationship between the independent and dependent variables. (The mean of the Y values is accurately modeled by a linear function of the X values)
+**1. Linearity**: There is a linear relationship between the independent and dependent variables. (The mean of the Y values is accurately modeled by a linear function of the X values)
 {: .notice}
 
-**Normality of the Errors:**: The random error term is assumed to have a normal distribution with a mean of zero.
+**2. Normality of the Errors**: The random error term is assumed to have a normal distribution with a mean of zero.
 {: .notice}
 
-**Homoscedasticity**: The random error term is assumed to have a constant variance.
+**3. Homoscedasticity**: The random error term is assumed to have a constant variance.
 {: .notice}
 
-**Independence of the Errors**: The errors are independent of each other.
+**4. Independence of the Errors**: The errors are independent of each other.
 {: .notice}
 
-**No Perfect Multicollinearity**: There is no **perfect** collinearity between independent variables (for multiple linear regression).
+**5. No Perfect Multicollinearity**: (For multiple linear regression) There is no **perfect** collinearity between independent variables.
 {: .notice}
 <br />
 Let's look at these one-by-one.
