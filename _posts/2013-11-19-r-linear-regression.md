@@ -16,9 +16,6 @@ tags: [r,linear regression,statistics]
 </div>
 </section><!-- /#table-of-contents -->
 
-**This article is a work in progress.**
-{: .notice}
-
 ## Introduction and Data
 
 This example demonstrates how to perform simple linear regression using R.  The data used in this demonstration is housed in the `ISwR` package and is titled `kfm`. The variables are:
