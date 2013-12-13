@@ -10,4 +10,4 @@ image:
   credit: Clay Heaton
 ---
 
-This site is produced by [Clay Heaton](https://github.com/ccheaton) and (insert more people) from the NCSU Institute for Advanced Analytics. 
+This site is produced by [Clay Heaton](https://github.com/ccheaton) and Nicholas Pylypiw, students at the [NCSU Institute for Advanced Analytics](http://analytics.ncsu.edu). 
