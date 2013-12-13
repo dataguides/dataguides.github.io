@@ -18,7 +18,7 @@ tags: [sas,linear regression,statistics]
 
 ## Introduction and Data
 
-This example demonstrates how to perform simple linear regression using SAS.  The data used in this demonstration is housed in the `ISwR` package and is titled `kfm`. The variables are:
+This example demonstrates how to perform simple linear regression using SAS.  The data used in this demonstration is in a CSV file called `kfm.csv`. The variables are:
 
 | **Variable** | **Description** |
 | ------------ | --------------- |
@@ -175,7 +175,7 @@ Let's look at these one-by-one.
 
 #### Linearity of the Relationship
 
-It is necessary to assume that the mean of the response is a linear combination of the predictor variables.  It is apparent from the initial exploration that these data exhibit a linear relationship.
+It is necessary to assume that the mean of the response is a linear combination of the predictor variables. It is apparent from the initial exploration that these data exhibit a linear relationship.
 
 #### Normality of the Residuals
 

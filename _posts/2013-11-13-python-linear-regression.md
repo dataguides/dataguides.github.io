@@ -18,42 +18,90 @@ tags: [python,linear regression,statistics]
 
 ## Introduction and Data
 
-This brief tutorial shows an example of how to perform linear regression with python. There are many ways to perform linear regression with python. This example uses the [SciPy](http://www.scipy.org/) library that is commonly used in python-based analysis.
+This brief tutorial shows an example of how to perform linear regression with python. There are many ways to perform linear regression with python. This example uses the [SciPy](http://www.scipy.org/) and [Pandas](http://pandas.pydata.org/) libraries that are commonly used in python-based analysis.
 <br /><br />
 
-The data set that we use for this example is [Cricket Chirps Vs. Temperature](http://college.cengage.com/mathematics/brase/understandable_statistics/7e/students/datasets/slr/frames/frame.html), from *The Song of Insects*, by Dr. G.W. Pierce, Harvard College Press.
+The data used in this demonstration is in a CSV file called `kfm.csv`. The variables are:
 
-Here is the complete data set, in CSV format. For this exercise, copy/paste this data into a blank file and save it as `crickets.csv`.
+| **Variable** | **Description** |
+| ------------ | --------------- |
+| `no` | A numeric vector, identification number |
+| `dl.milk` | A numeric vector, breast-milk intake (dl/24h) |
+| `sex` | A factor with levels boy and girl |
+| `weight` | A numeric vector, weight of child (kg) |
+| `ml.suppl` | A numeric vector, supplementary milk substitute (ml/24h) |
+| `mat.weight` | A numeric vector, weight of mother (kg) |
+| `mat.height` | A numeric vector, height of mother (cm) |
 
-| Var | Description |
-| :--------| :-----------|
-| `chirps` | Chirps per second for the striped ground cricket |
-|====
-| `temp` | Temperature in degrees Fahrenheit |
-{: rules="groups"}
+
+**Data as CSV:** [Here is the complete data set, in CSV format.]({{ site.url }}/files/kfm.csv)
+{: .notice}
+
 
 {% highlight text %}
-chirps,temp
-20,88.59999847
-16,71.59999847
-19.79999924,93.30000305
-18.39999962,84.30000305
-17.10000038,80.59999847
-15.5,75.19999695
-14.69999981,69.69999695
-17.10000038,82
-15.39999962,69.40000153
-16.20000076,83.30000305
-15,79.59999847
-17.20000076,82.59999847
-16,80.59999847
-17,83.5
-14.39999962,76.30000305
+   "no",    "dl.milk",    "sex",    "weight", "ml.suppl", "mat.weight",  "mat.height"
+    1,       8.42,    "boy",     5.002,      250,         65,         173
+    4,       8.44,    "boy",     5.128,        0,         48,         158
+    5,       8.41,    "boy",     5.445,       40,         62,         160
+   10,       9.65,    "boy",     5.106,       60,         55,         162
+   12,       6.44,    "boy",     5.196,      240,         58,         170
+   16,       6.29,    "boy",     5.526,        0,         56,         153
+   22,       9.79,    "boy",     5.928,       30,         78,         175
+   28,       8.43,    "boy",     5.263,        0,         57,         170
+   31,       8.05,    "boy",     6.578,      230,         57,         168
+   32,       6.48,    "boy",     5.588,      555,         58,         173
+   36,       7.64,    "boy",     4.613,        0,         58,         171
+   39,       8.73,    "boy",     5.882,       60,         54,         163
+   54,       7.71,    "boy",     5.618,      315,         68,         179
+   55,       8.39,    "boy",     6.032,      370,         56,         175
+   72,       9.32,    "boy",     6.030,      130,         62,         168
+   78,       6.78,    "boy",     4.727,        0,         59,         172
+   79,       9.63,    "boy",     5.345,       55,         68,         172
+   80,       5.97,    "boy",     5.359,       10,         60,         159
+   81,       8.39,    "boy",     5.320,       20,         59,         174
+   82,      10.43,    "boy",     6.501,      105,         76,         185
+   83,       5.62,    "boy",     4.666,       80,         52,         159
+   84,       6.84,    "boy",     4.969,       80,         54,         165
+   90,      10.35,    "boy",     6.105,        0,         78,         174
+   91,       4.91,    "boy",     4.360,        0,         49,         162
+   98,       7.70,    "boy",     5.667,        0,         63,         165
+    6,      10.03,   "girl",     6.100,        0,         58,         167
+   14,       7.42,   "girl",     5.421,       45,         67,         175
+   25,       5.00,   "girl",     4.744,       30,         73,         164
+   26,       8.67,   "girl",     5.800,       30,         80,         175
+   27,       6.90,   "girl",     5.822,        0,         59,         174
+   34,       6.89,   "girl",     5.081,       20,         53,         162
+   37,       7.22,   "girl",     5.336,      590,         58,         160
+   38,       7.01,   "girl",     5.637,      100,         63,         170
+   40,       8.06,   "girl",     5.546,       70,         61,         170
+   41,       4.44,   "girl",     4.386,      150,         58,         167
+   43,       8.57,   "girl",     5.568,       30,         70,         172
+   46,       5.17,   "girl",     5.169,        0,         65,         160
+   47,       7.74,   "girl",     4.825,      210,         58,         176
+   56,       7.93,   "girl",     5.156,       20,         74,         165
+   57,       5.03,   "girl",     4.120,      100,         55,         162
+   63,       7.68,   "girl",     4.725,      100,         50,         160
+   65,       6.91,   "girl",     5.636,       30,         49,         161
+   66,       8.23,   "girl",     5.377,      110,         55,         167
+   68,       7.36,   "girl",     5.195,       80,         59,         171
+   74,       6.46,   "girl",     5.385,       70,         51,         165
+   85,       7.24,   "girl",     4.635,       15,         48,         167
+   88,       9.03,   "girl",     5.730,      100,         62,         172
+  100,       4.63,   "girl",     5.360,      145,         48,         157
+  104,       6.97,   "girl",     4.890,       30,         67,         165
+  105,       5.82,   "girl",     4.339,       95,         47,         163
 {% endhighlight %}
 
-### Explore the data: plotting
+**The Task**: perform a linear regression using dl.milk as explanatory and weight as response.
 
-One of the first steps in exploratory data analysis always is to plot the data. Let's look at how to plot the data with matplotlib in python. The code is commented. See the *Additional References* section at the bottom of this post for links to more resources about plotting data in python.
+### Getting Started
+
+[iPython Notebook](http://ipython.org/notebook.html) is a very useful python environment for storing notes and performing analysis with embedded images and commentary. The examples in this tutorial were created in iPython Notebook.
+
+To begin, load the libraries needed to perform the analysis. 
+
+**Installing Libraries**: You may need to use `easy_install` or `pip` to install these packages. Alternatively, the [Anaconda](http://continuum.io/downloads) distribution of python includes many of the necessary libraries.
+{: .notice}
 
 {% highlight python %}
 # Import the numpy library
@@ -62,35 +110,41 @@ import numpy
 # Import the plotting library and refer to it as plt
 import matplotlib.pyplot as plt
 
-# Use numpy to load the data into a 2D numpy array
-data = numpy.loadtxt("crickets.csv",delimiter=",",skiprows=1)
+# Required only for iPython Notebook
+%pylab inline
 
+import pandas as pd
+
+# Useful library for working with linear regression
+# http://statsmodels.sourceforge.net/stable/generated/statsmodels.regression.linear_model.RegressionResults.html
+import statsmodels.formula.api as sm
+
+from scipy import stats
+
+# Use pandas to load the data into a 2D numpy array
+data = pd.read_csv("C:/Users/clay/Desktop/py/tutorials/kfm.csv")
 # Slice the numpy array to get the data vectors
-# 0 represents the first column of data and 
-# 1 represents the second column of data
-chirps = data[:,0]
-temps  = data[:,1]
+# 1 represents the second column of data and 
+# 3 represents the fourth column of data
 
-# Chirps are the dependent variable here, so we will plot 
-# them on the y-axis
+dlmilk = data.ix[:,1]
+weight = data.ix[:,3]
+{% endhighlight %}
 
-# Establish with matplot lib that we're creating a figure
-fig = plt.figure()
+### Explore the data: plotting
 
-# Add the main title for the figure
-fig.suptitle('Temperature (f) vs. Cricket Chirps per Second', fontsize=12)
+One of the first steps in exploratory data analysis always is to plot the data. Let's look at how to plot the data with matplotlib in python. The code is commented. See the *Additional References* section at the bottom of this post for links to more resources about plotting data in python.
 
-# Establish the plot as part of the figure
-theplot = fig.add_subplot(1,1,1)
+{% highlight python %}
+# Weight of the child is the dependent variable here, so we will plot 
+# it on the y-axis
 
-# Set that it is a scatter plot with temps as x and chirps as y
-theplot.scatter(temps,chirps)
-
-# Set the axis labels
-theplot.set_xlabel('Temperature (f)')
-theplot.set_ylabel('Chirps per Second')
-
-# Display the plot
+fig = plt.figure(figsize=(12, 8), dpi=80)
+fig.suptitle('dL of Milk vs. Weight of Child', fontsize=16)
+theplot  = fig.add_subplot(1,1,1)
+theplot.scatter(dlmilk,weight)
+theplot.set_xlabel('dL of Milk')
+theplot.set_ylabel('Weight of Child')
 plt.show()
 {% endhighlight %}
 
@@ -102,49 +156,63 @@ Hey, those look pretty correlated... let's check it out.
 
 ### Explore the data: Correlation
 
-It's easiest to include all of the relevant exploratory data tests in a single script. That way, you can run one script and analyze your output to better understand your data. 
-
-For the purposes of this tutorial, I'm breaking the components out and will present the comprehensive script at the end. 
-
-To check for correlation with Pearsons correlation coefficient, you can either write another script or just use `ipython`, either as a notebook, QT console, or in Powershell. Let's go with Powershell.
-
-Launch Powershell and navigate to the directory where your `crickets.csv` file lives. Type `python` at the prompt and then enter this code:
+There are two ways that we can calculate the correlation between the variables. The first is using the scipy stats library
 
 {% highlight python %}
->>> import numpy
->>> from scipy import stats
->>> data = numpy.loadtxt("crickets.csv",delimiter=",",skiprows=1)
->>> chirps = data[:,0]
->>> temps  = data[:,1]
->>> stats.pearsonr(temps,chirps)
-(0.83514378703115499, 0.00010667185499560227)
+# Calculates a Pearson correlation coefficient and 
+# the p-value for testing non-correlation.
+stats.pearsonr(dlmilk,weight)
+{% endhighlight %}
+
+The output:
+
+{% highlight text %}
+(0.63604482482603641, 6.9153761747038878e-07)
 {% endhighlight %}
 
 According to the [SciPy reference guide](http://docs.scipy.org/doc/scipy/reference/generated/scipy.stats.pearsonr.html), the `stats.pearsonr(x,y)` function "Calculates a Pearson correlation coefficient and the p-value for testing non-correlation." Note that this is a 2-tailed p-value.
 
-So, in our results above, our correlation coefficient is 0.835, indicating strong correlation between temps and chirps. The p-value for the test of non-correlation is 0.0001, so we reject the null hypothesis that the values are not correlated and conclude that they are correlated.
+So, in our results above, our correlation coefficient is 0.636, indicating strong correlation between temps and chirps. The p-value for the test of non-correlation is very small, so we reject the null hypothesis that the values are not correlated and conclude that they are correlated.
 
-## Checking Assumptions
+We can also use Panda, but it does not provide a p-value for the test:
+{% highlight python %}
+# Pandas approach -- no p-value
+weight.corr(dlmilk)
+
+# There are optional parameters for kendall tau and spearman
+# weight.corr(dlmilk, method='spearman') for example
+{% endhighlight %}
+
+The output:
+
+{% highlight text %}
+0.63604482482603653
+{% endhighlight %}
+
+## Verifying Assumptions
 
 When performing linear regression, we have several assumptions to check:
 
-There is a linear relationship between the independent and dependent variables. (The mean of the Y values is accurately modeled by a linear function of the X values)
+**1. Linearity**: There is a linear relationship between the independent and dependent variables. (The mean of the Y values is accurately modeled by a linear function of the X values)
 {: .notice}
 
-2. The random error term is assumed to have a normal distribution with a mean of zero.
-3. The random error term is assumed to have a constant variance (also called homoscedasticity)
-4. The errors are independent
-5. There is no **perfect** collinearity between independent variables (for multiple linear regression)
+**2. Normality of the Errors**: The random error term is assumed to have a normal distribution with a mean of zero.
+{: .notice}
 
+**3. Homoscedasticity**: The random error term is assumed to have a constant variance.
+{: .notice}
+
+**4. Independence of the Errors**: The errors are independent of each other.
+{: .notice}
+
+**5. No Perfect Multicollinearity**: (For multiple linear regression) There is no **perfect** collinearity between independent variables.
+{: .notice}
+<br />
 Let's look at these one-by-one.
 
 #### Linearity of the Relationship
 
-There are several ways to test this assumption. We've already done two of them! 
-
-The first is to create a scatterplot of the data and to eyeball it to determine whether the relationship looks linear. As you see in the graph above, it certainly does.
-
-The second is to calculate the correlation between them. As we saw above, there is a strong positive correlation between temperature and the chirps per second of the crickets. 
+Well, this one is easy and we've already done it. Simply examine the plot that we previously created and you can see linearity in the relationship, versus a curve that might indicate a quadratic relationship.
 
 ### Additional References
 
