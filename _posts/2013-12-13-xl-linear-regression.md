@@ -205,8 +205,8 @@ Now that all of the preliminary work has been completed, regression analysis can
 
 The output from the regression contains the above table, indicating the coefficients and relative significance.  Here it can be seen that the coefficient of the dlmilk variable is .2307 (95% confidence level is between .149 and .312) and it is significant, since the p-value is much less than .05 (6.9E-7).  The intercept is estimated to be 3.5873 (95% confidence level between 2.966 and 4.209).  The least-squares regression line is only explaining about 40% of the variation, as indicated by the R-squared value.
 
-So the equation of the least squares regression line is weight=3.5873+dl.milk*.2307.  This can be used to create a column of predictions as necessary.
+So the equation of the least squares regression line is `weight=3.5873+dl.milk*.2307`.  This can be used to create a column of predictions as necessary.
 
 ## Conclusion
 
-We hope you found this guide to simple linear regression in SAS useful!
+We hope you found this guide to simple linear regression in Excel useful!

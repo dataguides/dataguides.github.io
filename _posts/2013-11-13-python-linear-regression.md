@@ -189,10 +189,113 @@ The output:
 0.63604482482603653
 {% endhighlight %}
 
+### Building a Linear Model
+
+Pandas points us to the statsmodels package for detailed linear regression output:
+
+{% highlight python %}
+# Approach to OLS with more results
+# http://pandas.pydata.org/pandas-docs/dev/remote_data.html
+import statsmodels.formula.api as smf
+model  = smf.ols("weight ~ dlmilk", data)
+fitted = model.fit()
+print fitted.summary()
+{% endhighlight %}
+
+The results:
+
+{% highlight text %}
+
+                            OLS Regression Results                            
+==============================================================================
+Dep. Variable:                 weight   R-squared:                       0.405
+Model:                            OLS   Adj. R-squared:                  0.392
+Method:                 Least Squares   F-statistic:                     32.61
+Date:                Fri, 13 Dec 2013   Prob (F-statistic):           6.92e-07
+Time:                        12:44:57   Log-Likelihood:                -27.434
+No. Observations:                  50   AIC:                             58.87
+Df Residuals:                      48   BIC:                             62.69
+Df Model:                           1                                         
+==============================================================================
+                 coef    std err          t      P>|t|      [95.0% Conf. Int.]
+------------------------------------------------------------------------------
+Intercept      3.5873      0.309     11.603      0.000         2.966     4.209
+dlmilk         0.2307      0.040      5.711      0.000         0.149     0.312
+==============================================================================
+Omnibus:                        0.477   Durbin-Watson:                   1.948
+Prob(Omnibus):                  0.788   Jarque-Bera (JB):                0.628
+Skew:                           0.164   Prob(JB):                        0.731
+Kurtosis:                       2.560   Cond. No.                         39.8
+==============================================================================
+{% endhighlight %}
+
+Alternatively, we can use the features built into Pandas for different output:
+
+{% highlight python %}
+# OLS with pandas
+# Build the model and fit it
+model = pd.ols(y = weight, x = dlmilk)
+model
+{% endhighlight %}
+
+The results:
+
+{% highlight text %}
+-------------------------Summary of Regression Analysis-------------------------
+
+Formula: Y ~ <x> + <intercept>
+
+Number of Observations:         50
+Number of Degrees of Freedom:   2
+
+R-squared:         0.4046
+Adj R-squared:     0.3921
+
+Rmse:              0.4275
+
+F-stat (1, 48):    32.6117, p-value:     0.0000
+
+Degrees of Freedom: model 1, resid 48
+
+-----------------------Summary of Estimated Coefficients------------------------
+      Variable       Coef    Std Err     t-stat    p-value    CI 2.5%   CI 97.5%
+--------------------------------------------------------------------------------
+             x     0.2307     0.0404       5.71     0.0000     0.1515     0.3099
+     intercept     3.5873     0.3092      11.60     0.0000     2.9813     4.1932
+---------------------------------End of Summary---------------------------------
+{% endhighlight %}
+
+Building off of the first approach, let's plot the data again, this time with the fitted line:
+
+{% highlight python %}
+# Plot the data again, with the fitted line
+plt.figure(figsize=(12, 8), dpi=80)
+plt.plot(dlmilk,weight, 'ro')
+plt.plot(dlmilk,fitted.fittedvalues, 'b')
+
+# For a Lowess smoothed line
+# http://statsmodels.sourceforge.net/devel/generated/statsmodels.nonparametric.smoothers_lowess.lowess.html
+
+# loc = 2 puts the legend in the upper-left
+# http://matplotlib.org/users/legend_guide.html
+plt.legend(['Data', 'Fitted Model'], loc = 2)
+
+# Set axis limits
+# plt.ylim(12,22)
+# plt.xlim(65,98)
+
+plt.xlabel('dL of Milk / 24 hours')
+plt.ylabel('Weight of Child (kg)')
+plt.title('Fitted Model of Milk Consumption vs. Weight of Child')
+plt.show()
+{% endhighlight %}
+
+![Plot with model line]({{ site.url }}/images/py_slr_fig2.png)
+
 ## Verifying Assumptions
 
 When performing linear regression, we have several assumptions to check:
-
+ 
 **1. Linearity**: There is a linear relationship between the independent and dependent variables. (The mean of the Y values is accurately modeled by a linear function of the X values)
 {: .notice}
 
@@ -213,6 +316,99 @@ Let's look at these one-by-one.
 #### Linearity of the Relationship
 
 Well, this one is easy and we've already done it. Simply examine the plot that we previously created and you can see linearity in the relationship, versus a curve that might indicate a quadratic relationship.
+
+#### Normality of the Residuals
+
+We can formally test the residuals for normality using a Shapiro Wilk test:
+
+{% highlight python %}
+# Formal test -- Shapiro Wilk
+stats.shapiro(fitted.norm_resid())
+{% endhighlight %}
+
+The results:
+{% highlight text %}
+(0.9769636392593384, 0.43218812346458435)
+{% endhighlight %}
+
+The null hypothesis is that the residuals are normal. The second value returned in the results is the p-value, which indicates that we fail to reject our null and conclude that the residuals are normal.
+
+(Insert a Q-Q plot here later...)
+
+#### Homoscedasticity
+
+Here's how we check the homoscedasticity of the residuals:
+
+{% highlight python %}
+# Check residuals
+# http://statsmodels.sourceforge.net/devel/examples/generated/example_gls.html
+
+residuals = fitted.resid
+
+plt.figure(figsize=(12, 8), dpi=80)
+plt.plot(dlmilk,residuals, 'ro')
+
+# Add a horizontal line at 0
+# http://matplotlib.org/api/pyplot_api.html#matplotlib.pyplot.axhline
+plt.axhline(y=0, xmin=0, xmax=1)
+
+plt.xlabel('dL of Milk / 24 hours')
+plt.ylabel('Residual Values')
+plt.title('Plot of Residuals')
+
+plt.show()
+{% endhighlight %}
+
+We do not see any type of fan shape in the residuals, which indicates that the residuals exhibit homoscedasticity.
+
+![Plot of residuals]({{ site.url }}/images/py_slr_fig3.png)
+
+#### Independence of the Error Terms
+
+We want a Durbin-Watson test result that is close to 2. If you look at the regression output above, you will see that the value for our model is 1.948. 
+
+To test it separately, do the following:
+{% highlight python %}
+import statsmodels as ssm
+ssm.stats.stattools.durbin_watson(fitted.resid)
+{% endhighlight %}
+
+The result:
+{% highlight text %}
+1.9476337892720015
+{% endhighlight %}
+
+#### No Perfect Multicollinearity
+
+We only have one independent variable, so we do not need to test for perfect multicollinearity.
+
+### Additional Tests: Influential Points
+
+There are several additional tests that we can perform and plots that we can generate to help identify influential points in the data:
+
+{% highlight python %}
+influence = fitted.get_influence()
+
+# c is the distance and p is p-value
+(c,p) = influence.cooks_distance
+
+plt.figure(figsize=(12, 8), dpi=80
+plt.stem(np.arange(len(c)), c, markerfmt=",")
+plt.show()
+{% endhighlight %}
+
+![Cooks D]({{ site.url }}/images/py_slr_fig5.png)
+
+{% highlight python %}
+# Looking at leverage - need to import this package
+from statsmodels.graphics.regressionplots import *
+
+plot_leverage_resid2(fitted)
+influence_plot(fitted)
+{% endhighlight %}
+
+![Influential Points and Leverage]({{ site.url }}/images/py_slr_fig6.png)
+
 
 ### Additional References
 
